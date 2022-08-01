@@ -9,6 +9,7 @@ var oldButtons = document.querySelector(".buttons");
 
 var searches = [];
 var index = 0;
+tracker = 1;
 function handleSubmit(event){
     event.preventDefault();
     var search = input.value.trim();
@@ -25,6 +26,9 @@ function handleSubmit(event){
 function displayHistory(){
         var searchEl = document.createElement("button");
         searchEl.classList.add("buttons");
+        searchEl.setAttribute('id', "buttons" + tracker);
+        tracker++;
+
         searchEl.innerHTML = localStorage.getItem(index-1);
         searchHistroy.appendChild(searchEl);
         searchEl.style.listStyle = "none";
@@ -49,7 +53,13 @@ function getWeather(name){
     });
 };
 
-function handleOldButtons(){
-    
+function handleOldButtons(event){
+    event.preventDefault();
+    var search = event.target.innerHTML;
+    getWeather(search);
+
+
+
 }
 searchButton.addEventListener('click', handleSubmit);
+searchHistroy.addEventListener('click', handleOldButtons);
