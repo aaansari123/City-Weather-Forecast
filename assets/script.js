@@ -1,4 +1,4 @@
-// key 798857f5f7d6213943574838124df4c6
+// creating doc element variables
 var searchButton = document.querySelector("#searchButton");
 var fiveDayForecast = document.querySelector("#weather-container");
 var currentWeather = document.querySelector("#weather-forecast");
@@ -12,23 +12,25 @@ var forcastEl3 = document.createElement("p");
 var forcastEl4 = document.createElement("p");
 var forcastEl5 = document.createElement("p");
 
+// creating global variables used in functions
 var searches = [];
 var index = 0;
 tracker = 1;
+
+// function to handle the submit event
 function handleSubmit(event){
     event.preventDefault();
     var search = input.value.trim();
     searches.push(search);
-    console.log(searches);
     localStorage.setItem(index, search);
     index ++;
     displayHistory();
-    console.log(index);
     input.value = "";
     getWeather(search);
     getForecast(search);
 }
 
+// function that displays the search history buttons
 function displayHistory(){
         var searchEl = document.createElement("button");
         searchEl.classList.add("buttons");
@@ -41,6 +43,8 @@ function displayHistory(){
 
 }
 
+
+//  displays weather info
 function displayWeather(data){
 
     console.log(data);
@@ -48,6 +52,8 @@ function displayWeather(data){
     currentWeather.appendChild(weatherEl);
 
 }
+
+// displays the forecast info
 function displayForecast(data){
 
     console.log(data);
@@ -67,6 +73,9 @@ function displayForecast(data){
 
 
 }
+
+// api call for weather info
+
 function getWeather(name){
     var apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + name + "&units=imperial&appid=798857f5f7d6213943574838124df4c6"
     fetch(apiURL).then(function (response){
@@ -77,6 +86,8 @@ function getWeather(name){
         }
     });
 };
+
+// api call for forecast info
 
 function getForecast(name){
     var apiURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "&units=imperial&appid=798857f5f7d6213943574838124df4c6"
@@ -89,11 +100,14 @@ function getForecast(name){
     });
 };
 
+// handles search history button clicks
 function handleOldButtons(event){
     event.preventDefault();
     var search = event.target.innerHTML;
     getWeather(search);
     getForecast(search);
 }
+
+// event listeners for the button clicks
 searchButton.addEventListener('click', handleSubmit);
 searchHistroy.addEventListener('click', handleOldButtons);
